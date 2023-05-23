@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Classic Burger",
+      "description": "Delicious burger with beef, lettuce, tomato, and cheddar cheese",
+      "price": 8.99,
+      "category": "Burgers",
+      "image": "https://picsum.photos/200/300?image=1"
+    },
+    {
+      "id": 2,
+      "name": "Margherita Pizza",
+      "description": "Traditional pizza with tomato sauce, mozzarella, and fresh basil",
+      "price": 10.99,
+      "category": "Pizzas",
+      "image": "https://picsum.photos/200/300?image=2"
+    },
+    {
+      "id": 3,
+      "name": "Caesar Salad",
+      "description": "Salad with grilled chicken, romaine lettuce, croutons, and Caesar dressing",
+      "price": 7.99,
+      "category": "Salads",
+      "image": "https://picsum.photos/200/300?image=3"
+    },
+    {
+      "id": 4,
+      "name": "Tomato Soup",
+      "description": "Hot tomato soup with fresh herbs and crispy bread",
+      "price": 4.99,
+      "category": "Soups",
+      "image": "https://picsum.photos/200/300?image=4"
+    },
+    {
+      "id": 5,
+      "name": "Grilled Steak Tacos",
+      "description": "Tacos with grilled steak, onion, cilantro, and spicy sauce",
+      "price": 9.99,
+      "category": "Tacos",
+      "image": "https://picsum.photos/200/300?image=5"
+    }
+  ]
+}
