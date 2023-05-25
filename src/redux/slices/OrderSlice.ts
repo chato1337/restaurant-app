@@ -1,3 +1,4 @@
+import { Order } from "@/models/order.model";
 import { Product } from "@/models/product.model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import { RootState } from "../store";
@@ -11,6 +12,7 @@ export interface OrderState {
     yourTotal: number;
     totalTable: number;
     tips: number
+	order: Order | null;
 }
 
 // Define the initial state using that type
@@ -21,7 +23,8 @@ const initialState: OrderState = {
     yourTotal: 0,
     totalTable: 0,
     tips: 0,
-	guest: null
+	guest: null,
+	order: null
 };
 
 export const orderSlice = createSlice({
@@ -47,11 +50,14 @@ export const orderSlice = createSlice({
 		},
 		setTips: (state, action: PayloadAction<number>) => {
 			state.tips = action.payload
+		},
+		setOrder: (state, action: PayloadAction<Order | null>) => {
+			state.order = action.payload
 		}
 	},
 });
 
-export const { incrementByAmount, setTable, setGuest, setProducts, addProduct, setTips } = orderSlice.actions;
+export const { incrementByAmount, setTable, setGuest, setProducts, addProduct, setTips, setOrder } = orderSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.order.yourTotal;

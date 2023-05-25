@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import OrderReducer from './slices/OrderSlice'
+import TableReducer from './slices/TableSlice'
 
 export const store = configureStore({
 	reducer: {
-        OrderReducer
+        OrderReducer,
+        TableReducer
     },
 	devTools: process.env.NODE_ENV !== "production",
 });

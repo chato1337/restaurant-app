@@ -2,16 +2,23 @@
 
 import Footer from "@/components/footer";
 import Menu from "@/components/menu";
+import OrderDetail from "@/components/orderDetail";
 import Product from "@/components/product";
+import TableDetail from "@/components/tableDetail";
+import { Table, TableDTO } from "@/models/table.model";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setGuest, setTable } from "@/redux/slices/OrderSlice";
+import { setTableSelected } from "@/redux/slices/TableSlice";
 import { ProductService } from "@/services/product.service";
-import { FormEvent } from "react";
+import { TableService } from "@/services/table.service";
+import { FormEvent, useEffect } from "react";
 
-export default function Page({ params }: { params: { id: number } }) {
+export default function Page({ params }: { params: { id: string } }) {
     const { id } = params
     const products = ProductService.getProducts()
     const table = useAppSelector(state => state.OrderReducer.table)
+    const tableSelected = useAppSelector(state => state.TableReducer.tableSelected)
+    const order = useAppSelector(state => state.OrderReducer.order)
     const dispatch = useAppDispatch()
     const joined: boolean = table > 0
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -20,15 +27,45 @@ export default function Page({ params }: { params: { id: number } }) {
         const name = input[0].value
 
         if (typeof name === "string" && name.length >= 3) {
-            dispatch(setTable(id))
+            dispatch(setTable(Number(id)))
             dispatch(setGuest(name))
         }
     }
+
+    const fetchTable = async () => {
+        const res = await TableService.getTable(Number(id))
+        
+        //if table dooes not exits
+        if (res.documents.length === 0) {
+            //create table in state
+            const newTable: TableDTO = {
+                number: Number(id),
+                orders: [],
+                customers: 0,
+                total: 0
+            }
+            const createdTable = await TableService.createTable(newTable)
+            dispatch(setTableSelected({...newTable, isActive: true, orders: [], id: createdTable.$id}))
+        }
+
+        //if table exist
+        if (res.documents.length > 0) {
+            const table = res.documents[0] as any
+            dispatch(setTableSelected({...table, id: res.documents[0].$id}))
+        }
+    }
+
+    useEffect(() => {
+        fetchTable()
+    }, [])
 
     return (
         <div className="max-w-380 mx-auto">
             {
                 joined && <Menu />
+            }
+            {
+                tableSelected && <TableDetail />
             }
             {
                 !joined && (
@@ -49,13 +86,16 @@ export default function Page({ params }: { params: { id: number } }) {
                     </>
                 )
             }
+            {
+                order && <OrderDetail />
+            }
             <div className="grid grid-cols-2 gap-4">
                 {
-                    joined && products.map(product => <Product key={product.id} product={product}/>)
+                    !order && joined && products.map(product => <Product key={product.id} product={product}/>)
                 }
             </div>
             {
-                joined && <Footer />
+                !order && joined && <Footer />
             }
         </div>
     );

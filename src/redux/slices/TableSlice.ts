@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 export interface TableState {
-    tables: Table[]
+    tables: Table[],
+    tableSelected: Table | null
 }
 
 const initialState: TableState = {
-    tables: []
+    tables: [],
+    tableSelected: null
 }
 
 export const tableSlice = createSlice({
@@ -19,10 +21,13 @@ export const tableSlice = createSlice({
         },
         addTable: (state, action: PayloadAction<Table>) => {
             state.tables = [...state.tables, action.payload]
+        },
+        setTableSelected: (state, action: PayloadAction<Table | null>) => {
+            state.tableSelected = action.payload
         }
     }
 })
 
-export const {setTable, addTable} = tableSlice.actions
+export const {setTable, addTable, setTableSelected} = tableSlice.actions
 
 export default tableSlice.reducer
