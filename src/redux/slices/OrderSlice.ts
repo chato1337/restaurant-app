@@ -45,11 +45,13 @@ export const orderSlice = createSlice({
 		addProduct: (state, action: PayloadAction<Product>) =>  {
 			state.products = [...state.products, action.payload]
 		},
-
+		setTips: (state, action: PayloadAction<number>) => {
+			state.tips = action.payload
+		}
 	},
 });
 
-export const { incrementByAmount, setTable, setGuest, setProducts, addProduct } = orderSlice.actions;
+export const { incrementByAmount, setTable, setGuest, setProducts, addProduct, setTips } = orderSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.order.yourTotal;
