@@ -10,7 +10,7 @@ Application for table-based order management in a restaurant.
 
 ### Live Demo:
 
-- customer side: [here]()
+- customer side: [here](https://restaurant-app-ten-rho.vercel.app/table)
 - waiter side: [here]()
 
 ##  Requeriments
