@@ -17,7 +17,7 @@ export default function OrderDetail() {
                 <tbody>
                     {
                         order?.products.map(el => (
-                            <tr>
+                            <tr key={el.id}>
                                 <td className="py-2 px-4  border">{el.name}</td>
                                 <td className="py-2 px-4  border">${el.price}</td>
                             </tr>

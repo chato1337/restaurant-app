@@ -7,11 +7,11 @@ export default function Page() {
 	const { tables } = useTable();
 	return (
 		<div>
-			<h2 className="text-2xl font-bold mb-4">Tus Mesas Activas</h2>
+			<h2 className="text-2xl font-bold mb-4">Your active tables</h2>
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{tables.length > 0 &&
 					tables.map((table) => (
-						<div className="max-w-xs mx-auto bg-white rounded-lg shadow-lg p-6">
+						<div key={table.id} className="max-w-xs mx-auto bg-white rounded-lg shadow-lg p-6">
 							<h3 className="text-lg font-semibold mb-2">
 								Mesa {table.number}
 							</h3>
@@ -31,7 +31,7 @@ export default function Page() {
 									<tbody>
                                         {
                                             table.orders.map(el => (
-                                                <tr>
+                                                <tr key={el}>
                                                     <td className="py-2 px-4">{el}</td>
                                                     <td className="py-2 px-4">
                                                         <Link href={`waiter/${el}`}>View</Link>

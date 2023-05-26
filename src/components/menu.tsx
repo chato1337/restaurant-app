@@ -3,7 +3,7 @@
 import { useAppSelector } from "@/redux/hooks";
 
 export default function Menu() {
-    const table = useAppSelector(state => state.OrderReducer.table)
+    const table = useAppSelector(state => state.TableReducer.tableNumber)
     const products = useAppSelector(state => state.OrderReducer.products)
     const guest = useAppSelector(state => state.OrderReducer.guest)
 

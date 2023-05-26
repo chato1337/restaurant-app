@@ -6,8 +6,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // Define a type for the slice state
 export interface OrderState {
 	guest: string | null
-	guests: string[]
-	table: number
     products: Product[];
     yourTotal: number;
     totalTable: number;
@@ -17,8 +15,6 @@ export interface OrderState {
 
 // Define the initial state using that type
 const initialState: OrderState = {
-	guests: [],
-	table: 0,
     products: [],
     yourTotal: 0,
     totalTable: 0,
@@ -35,9 +31,6 @@ export const orderSlice = createSlice({
 		// Use the PayloadAction type to declare the contents of `action.payload`
 		incrementByAmount: (state, action: PayloadAction<number>) => {
 			state.yourTotal += action.payload;
-		},
-		setTable: (state, action: PayloadAction<number>) => {
-			state.table = action.payload
 		},
 		setGuest: (state, action: PayloadAction<string>) => {
 			state.guest = action.payload
@@ -57,7 +50,7 @@ export const orderSlice = createSlice({
 	},
 });
 
-export const { incrementByAmount, setTable, setGuest, setProducts, addProduct, setTips, setOrder } = orderSlice.actions;
+export const { incrementByAmount, setGuest, setProducts, addProduct, setTips, setOrder } = orderSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.order.yourTotal;

@@ -4,12 +4,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TableState {
     tables: Table[],
-    tableSelected: Table | null
+    tableSelected: Table | null,
+    tableNumber: number
 }
 
 const initialState: TableState = {
     tables: [],
-    tableSelected: null
+    tableSelected: null,
+    tableNumber: 0
 }
 
 export const tableSlice = createSlice({
@@ -24,10 +26,13 @@ export const tableSlice = createSlice({
         },
         setTableSelected: (state, action: PayloadAction<Table | null>) => {
             state.tableSelected = action.payload
+        },
+        setTableNumber: (state, action: PayloadAction<number>) => {
+            state.tableNumber = action.payload
         }
     }
 })
 
-export const {setTable, addTable, setTableSelected} = tableSlice.actions
+export const {setTable, addTable, setTableSelected, setTableNumber} = tableSlice.actions
 
 export default tableSlice.reducer
