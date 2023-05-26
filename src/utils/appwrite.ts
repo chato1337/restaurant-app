@@ -20,8 +20,14 @@ export async function getCollection(name: "table" | "order" | "product") {
 	return res;
 }
 
+enum NameType {
+	Table = "table",
+	Order = "order",
+	Product = "product"
+}
+
 export async function createDocument(
-	name: "table" | "order" | "product",
+	name: NameType,
 	data: any
 ) {
 	const key = collections[name];
@@ -32,7 +38,7 @@ export async function createDocument(
 /** query: [key, value] */
 export async function getDocument(
 	query: { key: string; value: string | number },
-	name: "table" | "order" | "product"
+	name: NameType
 ) {
 	const key = collections[name];
 	const res = databases.listDocuments(SETTINGS.awDb, key, [
@@ -41,7 +47,7 @@ export async function getDocument(
 	return res;
 }
 
-export async function getDocumentById(id: string, name: "table" | "order" | "product") {
+export async function getDocumentById(id: string, name: NameType) {
 	const key = collections[name]
 	const res = await databases.getDocument(SETTINGS.awDb, key, id)
 	return res
