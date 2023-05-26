@@ -41,7 +41,7 @@ export async function getDocument(
 	name: NameType
 ) {
 	const key = collections[name];
-	const res = databases.listDocuments(SETTINGS.awDb, key, [
+	const res = await databases.listDocuments(SETTINGS.awDb, key, [
 		Query.equal(query.key, query.value),
 	]);
 	return res;
@@ -56,6 +56,6 @@ export async function getDocumentById(id: string, name: NameType) {
 
 export async function updateDocument(id: string, name: "table" | "order" | "product", data: any) {
 	const key = collections[name]
-	const res = databases.updateDocument(SETTINGS.awDb, key, id, data)
+	const res = await databases.updateDocument(SETTINGS.awDb, key, id, data)
 	return res
 }
