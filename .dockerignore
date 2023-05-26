@@ -1,6 +1,5 @@
 # Ignora los archivos y directorios generados por Next.js durante el desarrollo y la construcción
 node_modules
-.next
 out
 
 # Ignora los archivos y directorios específicos de desarrollo local
