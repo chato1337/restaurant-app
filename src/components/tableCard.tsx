@@ -19,7 +19,7 @@ export default function TableCard({ table }: { table: Table }) {
 					</thead>
 					<tbody>
 						{table.orders.map((el) => (
-							<tr>
+							<tr key={el}>
 								<td className="py-2 px-4">{el}</td>
 								<td className="py-2 px-4">
 									<a href="#">view</a>

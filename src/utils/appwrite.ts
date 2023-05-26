@@ -14,13 +14,13 @@ client
 
 const databases = new Databases(client);
 
-export async function getCollection(name: "table" | "order" | "product") {
+export async function getCollection(name: NameType) {
 	const key = collections[name];
 	const res = await databases.listDocuments(SETTINGS.awDb, key);
 	return res;
 }
 
-enum NameType {
+export enum NameType {
 	Table = "table",
 	Order = "order",
 	Product = "product"

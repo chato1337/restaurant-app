@@ -1,23 +1,23 @@
-# Establecer la imagen base
-FROM node:14-alpine
+# Usa la imagen base de Node.js
+FROM node:16
 
-# Establecer el directorio de trabajo
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar los archivos de la aplicación al contenedor
-COPY package.json yarn.lock ./
+# Copia el archivo de dependencias del proyecto
+COPY package*.json ./
 
-# Instalar las dependencias
-RUN yarn install --production
+# Instala las dependencias
+RUN npm install
 
-# Copiar el código fuente de la aplicación al contenedor
+# Copia el código fuente de la aplicación
 COPY . .
 
-# Compilar el frontend de React
-RUN cd frontend && yarn install && yarn build
+# Construye la aplicación
+RUN npm run build
 
-# Exponer el puerto del servidor de backend
+# Expone el puerto 3000 (puerto predeterminado de Next.js)
 EXPOSE 3000
 
-# Iniciar la aplicación
-CMD ["node", "backend/server.js"]
+# Ejecuta el comando de inicio de la aplicación
+CMD ["npm", "start"]

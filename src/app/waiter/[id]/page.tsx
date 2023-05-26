@@ -4,21 +4,21 @@ import { FlatOrder, Order } from "@/models/order.model";
 import { OrderService } from "@/services/order.service";
 import { ProductService } from "@/services/product.service";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
 	const { id } = params;
     const [order, setOrder] = useState<FlatOrder | null>(null)
     const route = useRouter()
 
-	const fetchOrder = async () => {
-		const res = await OrderService.getOrder(id)
-        setOrder(res as any)
-	};
+	const fetchOrder = useCallback(async () => {
+		const res = await OrderService.getOrder(id);
+		setOrder(res as any);
+	}, [id]);
 
     useEffect(() => {
         fetchOrder()
-    }, [])
+    }, [fetchOrder])
 
 	return (
 		<div className="bg-white rounded-lg shadow-lg p-6">
@@ -42,7 +42,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             const product = ProductService.getProducts()
                                 .find(el => el.id === id)
                             return (
-                                <tr>
+                                <tr key={id}>
                                     <td className="py-2 px-4 border">{product?.name}</td>
                                     <td className="py-2 px-4 border">{product?.price}</td>
                                 </tr>

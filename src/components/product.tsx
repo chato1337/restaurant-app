@@ -4,6 +4,7 @@ import { Product } from "@/models/product.model";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addProduct, setProducts } from "@/redux/slices/OrderSlice";
 import { useState } from "react";
+import Image from 'next/image';
 
 export default function Product({ product }: { product: Product }) {
     const dispatch = useAppDispatch()
@@ -26,7 +27,7 @@ export default function Product({ product }: { product: Product }) {
             <h3 className="text-lg font-bold text-gray-800">
                 { product.name }
             </h3>
-            <img src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4 rounded-full" />
+            <Image src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4 rounded-full" />
             <p className="text-gray-600 mb-2">{product.price} $</p>
             <p className="text-sm text-gray-700 mb-2">{product.description}</p>
             <p className="text-sm text-gray-700 mb-4">{product.category}</p>

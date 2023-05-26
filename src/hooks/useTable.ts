@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setGuest } from "@/redux/slices/OrderSlice"
 import { setTable, setTableNumber, setTableSelected } from "@/redux/slices/TableSlice"
 import { TableService } from "@/services/table.service"
-import { FormEvent, useEffect } from "react"
+import { FormEvent, useCallback, useEffect } from "react"
 
 export const useTable = (id: string | null = null) => {
     const dispatch = useAppDispatch()
@@ -13,12 +13,7 @@ export const useTable = (id: string | null = null) => {
     const tableNumber = useAppSelector(state => state.TableReducer.tableNumber)
     const tableSelected = useAppSelector(state => state.TableReducer.tableSelected)
     const currentTable = useAppSelector(state => state.TableReducer.tableSelected)
-    const fetchTables = async () => {
-        const res = await TableService.getTables()
-        const castTables = res.documents as any
-        dispatch(setTable(castTables))
-    }
-    const fetchTable = async () => {
+    const fetchTable = useCallback(async () => {
         if (id) {
             const res = await TableService.getTable(Number(id))
 
@@ -41,7 +36,7 @@ export const useTable = (id: string | null = null) => {
                 dispatch(setTableSelected({...table, id: res.documents[0].$id}))
             }
         }
-    }
+    }, [id, dispatch])
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -52,9 +47,14 @@ export const useTable = (id: string | null = null) => {
         }
     }
     useEffect(() => {
+        const fetchTables = async () => {
+            const res = await TableService.getTables()
+            const castTables = res.documents as any
+            dispatch(setTable(castTables))
+        }
         fetchTables()
         fetchTable()
-    }, [])
+    }, [fetchTable, dispatch])
 
     return {
         tables,
