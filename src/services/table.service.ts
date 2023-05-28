@@ -20,7 +20,7 @@ export class TableService {
     }
 
     static updateTable = async (id: number, data: TableDTO) => {
-        const res = await axios.put(SETTINGS.api + PATH + id, data)
+        const res: AxiosResponse<Table> = await axios.put(SETTINGS.api + PATH + id, data)
         return res.data
     }
 }

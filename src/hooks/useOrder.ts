@@ -17,10 +17,10 @@ export const useOrder = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const input = event.target as any
-        const tips = input[0].value
-        if(typeof tips === "string" && total > 0 && guest && currentTable) {
-            const value = tips.length > 0 ? Number(tips) : 0
+        const input = event.currentTarget.elements.namedItem("tips") as HTMLInputElement
+
+        if(input && total > 0 && guest && currentTable) {
+            const value = Number(input.value)
             dispatch(setTips(value))
             dispatch(incrementByAmount(value + total))
             const order: OrderDTO = {
@@ -30,8 +30,7 @@ export const useOrder = () => {
                 subtotal: value + total
             }
             const createdOrder = await OrderService.createOrder(order)
-            const castOrder = createdOrder as any
-            dispatch(setOrder({...castOrder, products: products}))
+            dispatch(setOrder(createdOrder))
             const table: TableDTO & { orders: number[] } = {
                 number: currentTable.number,
                 customers: currentTable.customers + 1,
@@ -39,8 +38,7 @@ export const useOrder = () => {
                 total: currentTable.total + order.subtotal
             }
             const updatedTable = await TableService.updateTable(currentTable.id, table)
-            const castTable = updatedTable as any
-            dispatch(setTableSelected({...castTable, id: updatedTable.$id }))
+            dispatch(setTableSelected(updatedTable))
         } else {
             alert(`select products first!`)
         }
