@@ -18,22 +18,21 @@ export const useTable = (id: string | null = null) => {
             const res = await TableService.getTable(Number(id))
 
             //if table dooes not exits
-            if (res.documents.length === 0) {
+            if (res.length === 0) {
                 //create table in state
                 const newTable: TableDTO = {
                     number: Number(id),
-                    orders: [],
                     customers: 0,
                     total: 0
                 }
                 const createdTable = await TableService.createTable(newTable)
-                dispatch(setTableSelected({...newTable, isActive: true, orders: [], id: createdTable.$id}))
+                dispatch(setTableSelected(createdTable))
             }
 
             //if table exist
-            if (res.documents.length > 0) {
-                const table = res.documents[0] as any
-                dispatch(setTableSelected({...table, id: res.documents[0].$id}))
+            if (res.length > 0) {
+                const table = res[0]
+                dispatch(setTableSelected(table))
             }
         }
     }, [id, dispatch])
@@ -49,8 +48,7 @@ export const useTable = (id: string | null = null) => {
     useEffect(() => {
         const fetchTables = async () => {
             const res = await TableService.getTables()
-            const castTables = res.documents as any
-            dispatch(setTable(castTables))
+            dispatch(setTable(res))
         }
         fetchTables()
         fetchTable()

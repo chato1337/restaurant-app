@@ -27,7 +27,13 @@ export default function Product({ product }: { product: Product }) {
             <h3 className="text-lg font-bold text-gray-800">
                 { product.name }
             </h3>
-            <Image src={product.image} alt={product.name} className="w-32 h-32 object-cover mb-4 rounded-full" />
+            <Image
+                src={product.image}
+                alt={product.name}
+                width={45}
+                height={45}
+                className="w-32 h-32 object-cover mb-4 rounded-full"
+            />
             <p className="text-gray-600 mb-2">{product.price} $</p>
             <p className="text-sm text-gray-700 mb-2">{product.description}</p>
             <p className="text-sm text-gray-700 mb-4">{product.category}</p>

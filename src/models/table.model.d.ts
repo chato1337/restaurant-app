@@ -1,14 +1,12 @@
 import { Order } from './order.model.d';
 
 export interface Table {
-    id: string
+    id: number
     number: number;
-    orders: string[];
+    orders: Order[];
     customers: number;
     total: number;
     isActive: boolean
 }
 
-export interface TableDTO extends Omit<Table, 'isActive' | 'orders' | 'id'> {
-    orders: string[]
-}
+export interface TableDTO extends Omit<Table, 'isActive' | 'orders' | 'id'> { }

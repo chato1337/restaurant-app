@@ -16,7 +16,7 @@ export default function TableDetail() {
 				</div>
 				<div>
 					<h4 className="text-lg font-semibold">Number of Orders:</h4>
-					<span className="text-gray-300">{currentTable?.orders.length} orders</span>
+					<span className="text-gray-300">{currentTable?.orders?.length} orders</span>
 				</div>
 				<div>
 					<h4 className="text-lg font-semibold">Number of Guests:</h4>

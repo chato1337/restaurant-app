@@ -1,4 +1,4 @@
-import { OrderDTO } from "@/models/order.model"
+import { Order, OrderDTO } from "@/models/order.model"
 import { TableDTO } from "@/models/table.model"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { incrementByAmount, setOrder, setTips } from "@/redux/slices/OrderSlice"
@@ -31,17 +31,16 @@ export const useOrder = () => {
             }
             const createdOrder = await OrderService.createOrder(order)
             const castOrder = createdOrder as any
-            dispatch(setOrder({...castOrder, id: createdOrder.$id, products: products}))
-            const table: TableDTO = {
+            dispatch(setOrder({...castOrder, products: products}))
+            const table: TableDTO & { orders: number[] } = {
                 number: currentTable.number,
                 customers: currentTable.customers + 1,
-                orders: [...currentTable.orders, createdOrder.$id],
+                orders: [ ...currentTable.orders.map(el => el.id), createdOrder.id ],
                 total: currentTable.total + order.subtotal
             }
             const updatedTable = await TableService.updateTable(currentTable.id, table)
             const castTable = updatedTable as any
             dispatch(setTableSelected({...castTable, id: updatedTable.$id }))
-            // alert(`your order for ${value + total} has been submited`)
         } else {
             alert(`select products first!`)
         }

@@ -1,14 +1,19 @@
-import { OrderDTO } from "@/models/order.model"
-import { createDocument, getCollection, getDocument, getDocumentById, NameType } from "@/utils/appwrite"
+import { SETTINGS } from "@/config/config"
+import { Order, OrderDTO } from "@/models/order.model"
+import axios, { AxiosResponse } from "axios"
 
+const PATH = 'orders/'
 export class OrderService {
     static getOrders = async () => {
-        return await getCollection(NameType.Order)
+        const res = await axios.get(SETTINGS.api + PATH)
+        return res.data
     }
     static createOrder = async (data: OrderDTO) => {
-        return await createDocument(NameType.Order, data)
+        const res: AxiosResponse<Order> = await axios.post(SETTINGS.api + PATH, data)
+        return res.data
     }
     static getOrder = async (id: string) => {
-        return await getDocumentById(id, NameType.Order)
+        const res: AxiosResponse<Order[]> = await axios.get(`${SETTINGS.api}${PATH}?id=${id}`)
+        return res.data
     }
 }

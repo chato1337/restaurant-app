@@ -1,20 +1,26 @@
+import { SETTINGS } from "@/config/config"
 import { Table, TableDTO } from "@/models/table.model"
-import { createDocument, getCollection, getDocument, NameType, updateDocument } from "@/utils/appwrite"
+import axios, { AxiosResponse } from "axios"
 
+const PATH = 'tables/'
 export class TableService {
     static getTables = async () => {
-        return await getCollection(NameType.Table)
+        const res: AxiosResponse<Table[]> = await axios.get(SETTINGS.api + PATH)
+        return res.data
     }
 
     static getTable = async (id: number) => {
-        return await getDocument({ key: 'number', value: id }, NameType.Table)
+        const res: AxiosResponse<Table[]> = await axios.get(`${SETTINGS.api}${PATH}?id=${id}`)
+        return res.data
     }
 
     static createTable = async (table: TableDTO) => {
-        return await createDocument(NameType.Table, table)
+        const res: AxiosResponse<Table> = await axios.post(SETTINGS.api + PATH, table)
+        return res.data
     }
 
-    static updateTable = async (id: string, data: TableDTO) => {
-        return await updateDocument(id, NameType.Table, data)
+    static updateTable = async (id: number, data: TableDTO) => {
+        const res = await axios.put(SETTINGS.api + PATH + id, data)
+        return res.data
     }
 }

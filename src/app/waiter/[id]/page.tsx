@@ -8,12 +8,14 @@ import { useCallback, useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
 	const { id } = params;
-    const [order, setOrder] = useState<FlatOrder | null>(null)
+    const [order, setOrder] = useState<Order | null>(null)
     const route = useRouter()
 
 	const fetchOrder = useCallback(async () => {
 		const res = await OrderService.getOrder(id);
-		setOrder(res as any);
+		if (res.length > 0) {
+			setOrder(res[0]);
+		}
 	}, [id]);
 
     useEffect(() => {
@@ -26,37 +28,33 @@ export default function Page({ params }: { params: { id: string } }) {
 			<h2 className="text-2xl font-bold mb-4">Order {id}</h2>
 			<div className="mb-4">
 				<p className="font-semibold">
-					Propietario: <span className="font-normal">{order?.owner}</span>
+					Owner: <span className="font-normal">{order?.owner}</span>
 				</p>
 			</div>
 			<table className="min-w-full">
 				<thead>
 					<tr>
-						<th className="py-2 px-4 border">Producto</th>
-						<th className="py-2 px-4 border">Precio</th>
+						<th className="py-2 px-4 border">Product</th>
+						<th className="py-2 px-4 border">Price</th>
 					</tr>
 				</thead>
 				<tbody>
                     {
-                        order?.products.map(id => {
-                            const product = ProductService.getProducts()
-                                .find(el => el.id === id)
-                            return (
-                                <tr key={id}>
-                                    <td className="py-2 px-4 border">{product?.name}</td>
-                                    <td className="py-2 px-4 border">{product?.price}</td>
-                                </tr>
-                            )
-                        })
+                        order?.products.map(el => (
+							<tr key={el.id}>
+								<td className="py-2 px-4 border">{el.name}</td>
+								<td className="py-2 px-4 border">{el.price}</td>
+							</tr>
+						))
                     }
 				</tbody>
 			</table>
 			<div className="mt-4">
 				<p className="font-semibold">
-					Propinas: <span className="font-normal">$ {order?.tips}</span>
+					Tips: <span className="font-normal">$ {order?.tips}</span>
 				</p>
 				<p className="font-semibold">
-					Total a pagar: <span className="font-normal">$ {order?.subtotal}</span>
+					Total: <span className="font-normal">$ {order?.subtotal}</span>
 				</p>
 			</div>
 		</div>
