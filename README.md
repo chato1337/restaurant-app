@@ -10,13 +10,14 @@ Application for table-based order management in a restaurant.
 
 ### Live Demo:
 
+- https://restaurant-app-ten-rho.vercel.app/
 - customer side: [here](https://restaurant-app-ten-rho.vercel.app/table)
 - waiter side: [here]()
 
 ##  Requeriments
 
 - node 16^
-- appwrite (check models folder)
+- [backend](https://github.com/chato1337/aux-back) 
 
 ## Installation using docker
 
