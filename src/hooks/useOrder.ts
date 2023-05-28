@@ -1,4 +1,4 @@
-import { Order, OrderDTO } from "@/models/order.model"
+import { OrderDTO } from "@/models/order.model"
 import { TableDTO } from "@/models/table.model"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { incrementByAmount, setOrder, setTips } from "@/redux/slices/OrderSlice"
